@@ -1,52 +1,51 @@
 package com.library.library.services;
 import java.util.stream.Collectors;
 import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.library.library.Entities.Book;
+import com.library.library.Exception.RegisterNotFoundException;
 import com.library.library.Dto.BookDto;
 import com.library.library.Repositories.BookRepository;
 
+import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class BookService {
 
-    @Autowired
-    BookRepository repository;
+    private final BookRepository bookRepository;
 
-    public String register(Book book) {
-        repository.save(book);
+    @Transactional //Só vai enviar para o banco se todas as operações dentro desse método derem certo... Caso dê erro, ele não joga para dentro do banco.
+    public Book register(Book book) {
+        bookRepository.save(book);
 
-        return "Successfully registered!";
+        return book;
     }
 
     public List<BookDto> showList() {
-        List<Book> books = repository.findAll();
+        List<Book> books = bookRepository.findAll();
         return books.stream().map(x -> new BookDto(x)).collect(Collectors.toList());
     }
 
-    public String delete(int id) {
-        Book book = repository.findById(id).orElse(null);
-
-        if (book != null) {
-            repository.delete(book);
-            return new String("Successfully deleted!");
-        }
-
-        return new String("Record not found.");
+    public int delete(int id) throws RegisterNotFoundException{//como o erro não é global, é necessário informar que o método pode jogar esse erro!
+        Book book = bookRepository.findById(id).orElseThrow(()-> new RegisterNotFoundException("Registro não encontrado!"));//No caso aqui ele ele gera um ERRO de 404 ao não encontrar o livro
+            bookRepository.delete(book);
+            return id;
     }
 
     public String edit(Book newbook, int id) {
-        Book book = repository.findById(id).orElse(null);
+        Book book = bookRepository.findById(id).orElse(null);
 
         book.setTittle(newbook.getTittle());
         book.setAuthor(newbook.getAuthor());
         book.setGenres(newbook.getGenres());
         book.setPublishDate(newbook.getPublishDate());
         book.setSynopsis(newbook.getSynopsis());
-        book.setStock(newbook.getStock());
         book.setActive(newbook.isActive()); //Testar esse campo 
+        book.setQuantitie(newbook.getQuantitie());
 
-        repository.save(book);
+        bookRepository.save(book);
 
         return new String("Book updated successfully!");
     }

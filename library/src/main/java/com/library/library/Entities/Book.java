@@ -23,7 +23,6 @@ public class Book {
     private String tittle;
     private String synopsis;
     private boolean Active;
-    private int stock;
     private Date publishDate;
     private int quantitie;
 

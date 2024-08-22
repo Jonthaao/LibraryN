@@ -24,7 +24,7 @@ public class Order {
     private Date devolution_date;
     private Boolean status_devolution;
     private Double multa;
-
+    
     @ManyToOne(cascade = CascadeType.REFRESH)
     private User user;
 

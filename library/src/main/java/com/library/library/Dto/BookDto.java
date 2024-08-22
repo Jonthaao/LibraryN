@@ -23,7 +23,6 @@ public class BookDto {
     public BookDto(Book book) {
         this.tittle = book.getTittle();
         this.isActive = book.isActive();
-        this.stock = book.getStock();
         this.publishDate = book.getPublishDate();
         this.quantitie = book.getQuantitie();
         this.Author = book.getAuthor().getName();
