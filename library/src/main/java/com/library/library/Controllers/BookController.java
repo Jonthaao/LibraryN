@@ -33,4 +33,15 @@ public class BookController {
         }     
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> edit(@PathParam ("id") int id){
+        try{
+            bookService.edit(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch(BookIdNotFoundException)
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+    }catch(Exception a){
+        return new ResponseEntity<> (a.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
 }

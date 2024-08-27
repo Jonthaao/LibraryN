@@ -1,5 +1,6 @@
 package com.library.library.Controllers;
 
-public class GenreController {
-    
+public final GenreController {
+
+  
 }

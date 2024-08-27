@@ -35,7 +35,7 @@ public class BookService {
     }
 
     public String edit(Book newbook, int id) {
-        Book book = bookRepository.findById(id).orElse(null);
+        Book book = bookRepository.findById(id).orElseThrow(()-> new BookIdNotFOundException("Id do livro não encontrado!"));
 
         book.setTittle(newbook.getTittle());
         book.setAuthor(newbook.getAuthor());
