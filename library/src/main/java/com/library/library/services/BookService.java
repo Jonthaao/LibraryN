@@ -3,6 +3,7 @@ import java.util.stream.Collectors;
 import java.util.List;
 import org.springframework.stereotype.Service;
 import com.library.library.Entities.Book;
+import com.library.library.Exception.BookIdNotFoundException;
 import com.library.library.Exception.RegisterNotFoundException;
 import com.library.library.Dto.BookDto;
 import com.library.library.Repositories.BookRepository;
@@ -34,8 +35,8 @@ public class BookService {
             return id;
     }
 
-    public String edit(Book newbook, int id) {
-        Book book = bookRepository.findById(id).orElse(null);
+    public String edit(Book newbook, int id) throws BookIdNotFoundException{
+        Book book = bookRepository.findById(id).orElseThrow(()-> new BookIdNotFoundException("Id do livro não encontrado!"));
 
         book.setTittle(newbook.getTittle());
         book.setAuthor(newbook.getAuthor());
