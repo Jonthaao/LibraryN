@@ -30,7 +30,7 @@ public class BookService {
     }
 
     public int delete(int id) throws RegisterNotFoundException{//como o erro não é global, é necessário informar que o método pode jogar esse erro!
-        Book book = bookRepository.findById(id).orElseThrow(()-> new RegisterNotFoundException("Registro não encontrado!"));//No caso aqui ele ele gera um ERRO de 404 ao não encontrar o livro
+        Book book = bookRepository.findById(id).orElseThrow(()-> new RegisterNotFoundException("Registro de livro não encontrado!"));//No caso aqui ele ele gera um ERRO de 404 ao não encontrar o livro
             bookRepository.delete(book);
             return id;
     }

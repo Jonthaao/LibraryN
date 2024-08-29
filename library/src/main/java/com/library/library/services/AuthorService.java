@@ -4,6 +4,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.library.library.Entities.Author;
+import com.library.library.Exception.AuthorIdNotFoundException;
+import com.library.library.Exception.RegisterNotFoundException;
 import com.library.library.Dto.AuthorDto;
 import com.library.library.Repositories.AuthorRepository;
 
@@ -12,38 +14,33 @@ import com.library.library.Repositories.AuthorRepository;
 public class AuthorService {
 
     @Autowired
-    AuthorRepository repository;
+    AuthorRepository authorRepository;
 
     public String register(Author author) {
-        repository.save(author);
+        authorRepository.save(author);
 
         return "Successfully registered!";
     }
 
     public List<AuthorDto> showList() {
-        List<Author> authors = repository.findAll();
+        List<Author> authors = authorRepository.findAll();
         return authors.stream().map(x -> new AuthorDto(x)).collect(Collectors.toList());
     }
 
-    public String delete(int id) {
-        Author author = repository.findById(id).orElse(null);
-
-        if (author != null) {
-            repository.delete(author);
-            return new String("Successfully deleted!");
-        }
-
-        return new String("Record not found.");
+    public int delete(int id) throws RegisterNotFoundException{
+        Author author = authorRepository.findById(id).orElseThrow(() -> new RegisterNotFoundException("Registro de autor não encontrado!"));
+        authorRepository.delete(author);
+        return id;
     }
 
-    public String edit(Author newauthor, int id) {
-        Author author = repository.findById(id).orElse(null);
+    public String edit(Author newauthor, int id) throws AuthorIdNotFoundException{
+        Author author = authorRepository.findById(id).orElseThrow(() -> new AuthorIdNotFoundException("Id do author não encontrado"));
 
         author.setName(newauthor.getName());
         author.setAge(newauthor.getAge());
         author.setDescription(newauthor.getDescription()); 
 
-        repository.save(author);
+        authorRepository.save(author);
 
         return new String("Author updated successfully!");
     }

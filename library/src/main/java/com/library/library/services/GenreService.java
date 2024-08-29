@@ -12,39 +12,39 @@ import com.library.library.Repositories.GenreRepository;
 public class GenreService {
 
     @Autowired
-    GenreRepository repository;
+    GenreRepository genreRepository;
 
-    public String register(Genre genre) {
-        repository.save(genre);
+    // public String register(Genre genre) {
+    //     genreRepository.save(genre);
 
-        return "Successfully registered!";
-    }
+    //     return "Successfully registered!";
+    // }
 
     public List<GenreDto> showList() {
-        List<Genre> genres = repository.findAll();
+        List<Genre> genres = genreRepository.findAll();
         return genres.stream().map(x -> new GenreDto(x)).collect(Collectors.toList());
     }
 
-    public String delete(int id) {
-        Genre genre = repository.findById(id).orElse(null);
+    // public String delete(int id) {
+    //     Genre genre = genreRepository.findById(id).orElse(null);
 
-        if (genre != null) {
-            repository.delete(genre);
-            return new String("Successfully deleted!");
-        }
+    //     if (genre != null) {
+    //         genreRepository.delete(genre);
+    //         return new String("Successfully deleted!");
+    //     }
 
-        return new String("Record not found.");
-    }
+    //     return new String("Record not found.");
+    // }
 
-    public String edit(Genre newgenre, int id) {
-        Genre genre = repository.findById(id).orElse(null);
+    // public String edit(Genre newgenre, int id) {
+    //     Genre genre = genreRepository.findById(id).orElse(null);
 
-        genre.setName(newgenre.getName());
-        genre.setDescription(newgenre.getDescription());
+    //     genre.setName(newgenre.getName());
+    //     genre.setDescription(newgenre.getDescription());
 
-        repository.save(genre);
+    //     genreRepository.save(genre);
 
-        return new String("Genre updated successfully!");
-    }
+    //     return new String("Genre updated successfully!");
+    // }
 
 }
