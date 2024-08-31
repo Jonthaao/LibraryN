@@ -24,7 +24,7 @@ public class OrderController {
     
     private final OrderService orderService;
     
-        @DeleteMapping("/{id}")
+        @DeleteMapping("/delete/{id}")
         public ResponseEntity<?> delete(@PathParam("id") int id) {
             try {
                 orderService.delete(id);
@@ -36,7 +36,7 @@ public class OrderController {
             }
         }
     
-        @PutMapping("/{id}")
+        @PutMapping("/edit/{id}")
         public ResponseEntity<?> edit(@PathParam("id") int id) {
             try {
                 orderService.edit(null, id);
@@ -53,9 +53,9 @@ public class OrderController {
         public ResponseEntity<?> register(Order order) {
             try {
                 orderService.register(order);
-                return new ResponseEntity<>("Pedido cadastrado com sucesso!", HttpStatus.NO_CONTENT);
+                return new ResponseEntity<String>("Pedido cadastrado com sucesso!", HttpStatus.NO_CONTENT);
             } catch (Exception e) {
-                return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+                return new ResponseEntity<String>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
             }
         }
     

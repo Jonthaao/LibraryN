@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class AuthorController {
     private final AuthorService authorService;
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathParam("id") int id) {
         try {
             authorService.delete(id);
@@ -35,7 +35,7 @@ public class AuthorController {
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/edit/{id}")
     public ResponseEntity<?> edit(@PathParam("id") int id) {
         try {
             authorService.edit(null, id);

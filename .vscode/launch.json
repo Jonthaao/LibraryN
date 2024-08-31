@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "OrderApplication",
+            "request": "launch",
+            "mainClass": "com.library.order.OrderApplication",
+            "projectName": "library"
+        },
+        {
+            "type": "java",
             "name": "Spring Boot-LibraryApplication<com.library-library>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
